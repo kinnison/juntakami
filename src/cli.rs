@@ -8,13 +8,11 @@ mod helpers;
 use git_testament::git_testament;
 use helpers::*;
 
-use crate::journal::NascentJournal;
-
 git_testament!(pub TESTAMENT);
 
 #[derive(Parser)]
 pub struct Cli {
-    #[clap(short, long, env = "JANTAKESHI_PATH", default_value_os_t = default_journal_path())]
+    #[clap(short, long, env = "JUNTAKAMI_PATH", default_value_os_t = default_journal_path())]
     /// The path to the journal
     path: PathBuf,
     #[clap(subcommand)]
@@ -39,18 +37,16 @@ pub enum Cmd {
     Status,
 }
 
-impl Cmd {
-    pub fn needs_existing(&self) -> bool {
-        !matches!(self, Self::DumpTestament | Self::Init(_))
-    }
-}
-
 #[derive(Clone, Parser)]
 /// Initialise a journal folder
-pub struct InitArgs {}
+pub struct InitArgs {
+    #[clap(short, long)]
+    /// Force initialisation even if there's a journal config already
+    force: bool,
+}
 
 impl InitArgs {
-    pub fn initialise(&self, journal: NascentJournal) {
-        todo!()
+    pub fn force(&self) -> bool {
+        self.force
     }
 }

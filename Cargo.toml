@@ -5,5 +5,12 @@ edition = "2021"
 
 [dependencies]
 clap = { version = "4.5.21", features = ["derive", "env"] }
+color-eyre = "0.6.3"
+eyre = "0.6.12"
 git-testament = "0.2.5"
 home = "0.5.9"
+serde = { version = "1.0.215", features = ["derive"] }
+time = { version = "0.3.36", features = ["formatting"] }
+toml = "0.8.19"
+tracing = "0.1.41"
+tracing-subscriber = { version = "0.3.18", features = ["fmt", "env-filter"] }
