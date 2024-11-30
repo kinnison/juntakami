@@ -209,6 +209,7 @@ pub fn fold_inline<F: MarkdownFold + ?Sized>(folder: &mut F, inline: Inline) -> 
         Inline::Emphasis(inlines) => Inline::Emphasis(folder.fold_emphasis(inlines)),
         Inline::Strong(inlines) => Inline::Strong(folder.fold_strong(inlines)),
         Inline::Strikethrough(inlines) => Inline::Strikethrough(folder.fold_strikethrough(inlines)),
+        Inline::InlineBlock(b) => Inline::InlineBlock(folder.fold_block(b)),
     }
 }
 

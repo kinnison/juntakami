@@ -167,6 +167,49 @@ impl Inline {
                         TagEnd::Strikethrough,
                     ))),
 
+                    heading @ Tag::Heading { .. } => {
+                        ret.push(Inline::InlineBlock(Block::Heading(Heading::from_events(
+                            heading, events,
+                        ))));
+                    }
+                    Tag::Paragraph => {
+                        ret.push(Inline::InlineBlock(Block::Paragraph(
+                            Paragraph::from_events(events),
+                        )));
+                    }
+                    blockquote @ Tag::BlockQuote(_) => ret.push(Inline::InlineBlock(
+                        Block::BlockQuote(BlockQuote::from_events(events, blockquote)),
+                    )),
+                    codeblock @ Tag::CodeBlock(_) => ret.push(Inline::InlineBlock(
+                        Block::CodeBlock(CodeBlock::from_events(events, codeblock)),
+                    )),
+                    Tag::HtmlBlock => {
+                        ret.push(Inline::InlineBlock(Block::HtmlBlock(
+                            HtmlBlock::from_events(events),
+                        )));
+                    }
+                    footnote @ Tag::FootnoteDefinition(_) => {
+                        ret.push(Inline::InlineBlock(Block::FootnoteDefinition(
+                            FootnoteDefinition::from_events(events, footnote),
+                        )));
+                    }
+                    Tag::List(start) => {
+                        ret.push(Inline::InlineBlock(Block::List(List::from_events(
+                            events, start,
+                        ))));
+                    }
+                    Tag::DefinitionList => ret.push(Inline::InlineBlock(Block::DefinitionList(
+                        DefinitionList::from_events(events),
+                    ))),
+                    Tag::MetadataBlock(kind) => ret.push(Inline::InlineBlock(Block::Metadata(
+                        MetadataBlock::from_events(events, kind),
+                    ))),
+                    Tag::Table(alignments) => {
+                        ret.push(Inline::InlineBlock(Block::Table(Table::from_events(
+                            events, alignments,
+                        ))));
+                    }
+
                     tag => {
                         panic!("Unable to process Start({tag:?}) for inline");
                     }

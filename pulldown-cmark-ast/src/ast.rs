@@ -62,6 +62,7 @@ pub enum Inline {
     Emphasis(Vec<Inline>),
     Strong(Vec<Inline>),
     Strikethrough(Vec<Inline>),
+    InlineBlock(Block),
 }
 
 #[derive(Debug, Clone)]

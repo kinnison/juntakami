@@ -71,6 +71,7 @@ impl Inline {
             Inline::SoftBreak => events.push(Event::SoftBreak),
             Inline::HardBreak => events.push(Event::HardBreak),
             Inline::TasklistMarker(b) => events.push(Event::TaskListMarker(*b)),
+            Inline::InlineBlock(b) => b.push_events(events),
         }
     }
 }

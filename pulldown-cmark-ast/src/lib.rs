@@ -122,6 +122,15 @@ yaml: metadata
 | Header      | Title       | Here's this   |
 | Paragraph   | Text        | And more      |
 
+# We had some funky list issues
+
+- [D] should vanish
+  even though it's multiline
+- [.] should become dash
+  - Doing more stuff
+- [x] Should become F
+
+
 "###;
 
     // The options we want for EVERYTHING
