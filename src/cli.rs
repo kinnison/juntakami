@@ -34,7 +34,14 @@ pub enum Cmd {
     #[clap(hide = true)]
     DumpTestament,
     Init(InitArgs),
+    /// Show the status of the git tree in the journal
     Status,
+    /// Show the configuration of the journal
+    ShowConfig,
+    /// Prepare today's entry
+    Prep,
+    /// Edit today's entry
+    Edit,
 }
 
 #[derive(Clone, Parser)]

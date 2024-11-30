@@ -9,8 +9,12 @@ color-eyre = "0.6.3"
 eyre = "0.6.12"
 git-testament = "0.2.5"
 home = "0.5.9"
+once_cell = "1.20.2"
+regex = "1.11.1"
 serde = { version = "1.0.215", features = ["derive"] }
-time = { version = "0.3.36", features = ["formatting"] }
+time = { version = "0.3.36", features = ["formatting", "local-offset"] }
 toml = "0.8.19"
+toml_edit = "0.22.22"
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.18", features = ["fmt", "env-filter"] }
+whoami = { version = "1.5.2", default-features = false }

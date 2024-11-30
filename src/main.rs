@@ -12,6 +12,7 @@ mod cli;
 pub mod config;
 mod git;
 mod journal;
+pub mod markdown;
 
 fn main() -> Result<()> {
     color_eyre::install()?;
@@ -43,6 +44,9 @@ fn main() -> Result<()> {
         Cmd::DumpTestament => {}
         Cmd::Init(_) => {}
         Cmd::Status => journal.show_status()?,
+        Cmd::ShowConfig => journal.show_config()?,
+        Cmd::Prep => journal.prep()?,
+        Cmd::Edit => journal.edit()?,
     }
 
     Ok(())

@@ -39,6 +39,9 @@ impl Git {
         I: IntoIterator<Item = S>,
         S: AsRef<OsStr>,
     {
+        if !self.available {
+            return Ok(String::new());
+        }
         let mut cmd = Command::new("git");
         cmd.args(args);
         cmd.current_dir(&self.base);
