@@ -10,6 +10,7 @@ use tracing_subscriber::EnvFilter;
 
 mod cli;
 pub mod config;
+pub mod filters;
 mod git;
 mod journal;
 pub mod markdown;

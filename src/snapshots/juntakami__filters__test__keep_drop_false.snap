@@ -1,0 +1,17 @@
+---
+source: src/filters.rs
+expression: rmd
+snapshot_kind: text
+---
+# High level { .keep }
+
+Expect to see this
+
+# Definitely have { .keep }
+
+ > 
+ > We’re keeping this blockquote
+ > 
+ > # See this bit again
+ > 
+ > Woo

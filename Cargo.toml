@@ -13,6 +13,7 @@ eyre = "0.6.12"
 git-testament = "0.2.5"
 home = "0.5.9"
 once_cell = "1.20.2"
+pulldown-cmark-ast = { path = "./pulldown-cmark-ast" }
 regex = "1.11.1"
 serde = { version = "1.0.215", features = ["derive"] }
 time = { version = "0.3.36", features = ["formatting", "local-offset"] }
@@ -21,3 +22,7 @@ toml_edit = "0.22.22"
 tracing = "0.1.41"
 tracing-subscriber = { version = "0.3.18", features = ["fmt", "env-filter"] }
 whoami = { version = "1.5.2", default-features = false }
+
+[dev-dependencies]
+insta = "1.41.1"
+rstest = { version = "0.23.0", default-features = false }
