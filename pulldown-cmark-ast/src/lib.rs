@@ -10,8 +10,12 @@ mod generate;
 #[doc(inline)]
 pub use ast::*;
 
+#[cfg(feature = "generate")]
+pub mod fold;
+
 #[cfg(test)]
 mod test {
+    use fold::MarkdownFold;
     use insta::{assert_debug_snapshot, assert_snapshot};
     use pulldown_cmark::{Event, Parser};
 
@@ -70,6 +74,8 @@ We can do _emphasised_ text, **strong** text, and ~struck-through~ text.
 Let's play with tasks next
 
 - [ ] Traditional incomplete task
+
+  With some extra text
 - [x] Traditional complete task
 - [d] Task to be dropped
 - [.] Partially complete task
@@ -155,7 +161,9 @@ yaml: metadata
     fn roundtrip() {
         let doc = Document::from_events(noisy_parser(EVERYTHING, opts()));
         assert_debug_snapshot!(doc);
-        let rendered = doc.render(render_opts());
+        struct NullFolder;
+        impl MarkdownFold for NullFolder {}
+        let rendered = NullFolder.fold_document(doc).render(render_opts());
         assert_snapshot!(rendered);
     }
 }

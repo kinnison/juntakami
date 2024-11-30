@@ -349,10 +349,9 @@ impl DefinitionList {
                     item.title = Inline::from_events(events, TagEnd::DefinitionListTitle);
                 }
                 Event::Start(Tag::DefinitionListDefinition) => {
-                    item.definitions.push(Inline::from_events(
-                        events,
-                        TagEnd::DefinitionListDefinition,
-                    ));
+                    item.definitions.push(DefinitionDefinition {
+                        body: Inline::from_events(events, TagEnd::DefinitionListDefinition),
+                    });
                 }
 
                 Event::End(TagEnd::DefinitionList) => break,

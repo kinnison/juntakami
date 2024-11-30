@@ -169,7 +169,7 @@ impl DefinitionItem {
         events.push(Event::End(TagEnd::DefinitionListTitle));
         for def in &self.definitions {
             events.push(Event::Start(Tag::DefinitionListDefinition));
-            def.iter().for_each(|i| i.push_events(events));
+            def.body.iter().for_each(|i| i.push_events(events));
             events.push(Event::End(TagEnd::DefinitionListDefinition));
         }
     }

@@ -4,8 +4,9 @@ version = "0.1.0"
 edition = "2021"
 
 [features]
-default = ["generate"]
+default = ["generate", "fold"]
 generate = ["dep:pulldown-cmark-to-cmark"]
+fold = []
 
 [dependencies]
 pulldown-cmark = { version = "0.12.2", default-features = false }

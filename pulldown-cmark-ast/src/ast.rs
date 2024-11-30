@@ -125,7 +125,12 @@ pub struct DefinitionList {
 #[derive(Debug, Clone)]
 pub struct DefinitionItem {
     pub title: Vec<Inline>,
-    pub definitions: Vec<Vec<Inline>>,
+    pub definitions: Vec<DefinitionDefinition>,
+}
+
+#[derive(Debug, Clone)]
+pub struct DefinitionDefinition {
+    pub body: Vec<Inline>,
 }
 
 #[derive(Debug, Clone)]
