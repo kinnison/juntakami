@@ -54,8 +54,13 @@ We can do _emphasised_ text, **strong** text, and ~~struck-through~~ text.
 Let's play with tasks next
 
 - [ ] Traditional incomplete task
+  
+  With some extra text
+
 - [x] Traditional complete task
+
 - \[d\] Task to be dropped
+
 - \[.\] Partially complete task
 
 1. A numbered list

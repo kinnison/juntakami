@@ -113,8 +113,9 @@ pub struct List {
 }
 
 #[derive(Debug, Clone)]
-pub struct ListItem {
-    pub body: Vec<Inline>,
+pub enum ListItem {
+    Inline(Vec<Inline>),
+    Block(Vec<Block>),
 }
 
 #[derive(Debug, Clone)]

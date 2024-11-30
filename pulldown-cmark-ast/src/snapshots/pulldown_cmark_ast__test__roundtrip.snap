@@ -1670,260 +1670,321 @@ Document {
             List {
                 start: None,
                 items: [
-                    ListItem {
-                        body: [
-                            TasklistMarker(
-                                false,
+                    Block(
+                        [
+                            Paragraph(
+                                Paragraph {
+                                    body: [
+                                        TasklistMarker(
+                                            false,
+                                        ),
+                                        Text(
+                                            Boxed(
+                                                "Traditional incomplete task",
+                                            ),
+                                        ),
+                                    ],
+                                },
                             ),
-                            Text(
-                                Boxed(
-                                    "Traditional incomplete task",
-                                ),
-                            ),
-                        ],
-                    },
-                    ListItem {
-                        body: [
-                            TasklistMarker(
-                                true,
-                            ),
-                            Text(
-                                Boxed(
-                                    "Traditional complete task",
-                                ),
-                            ),
-                        ],
-                    },
-                    ListItem {
-                        body: [
-                            Text(
-                                Inlined(
-                                    InlineStr {
-                                        inner: [
-                                            91,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                        ],
-                                        len: 1,
-                                    },
-                                ),
-                            ),
-                            Text(
-                                Inlined(
-                                    InlineStr {
-                                        inner: [
-                                            100,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                        ],
-                                        len: 1,
-                                    },
-                                ),
-                            ),
-                            Text(
-                                Inlined(
-                                    InlineStr {
-                                        inner: [
-                                            93,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                        ],
-                                        len: 1,
-                                    },
-                                ),
-                            ),
-                            Text(
-                                Inlined(
-                                    InlineStr {
-                                        inner: [
-                                            32,
-                                            84,
-                                            97,
-                                            115,
-                                            107,
-                                            32,
-                                            116,
-                                            111,
-                                            32,
-                                            98,
-                                            101,
-                                            32,
-                                            100,
-                                            114,
-                                            111,
-                                            112,
-                                            112,
-                                            101,
-                                            100,
-                                            0,
-                                            0,
-                                            0,
-                                        ],
-                                        len: 19,
-                                    },
-                                ),
+                            Paragraph(
+                                Paragraph {
+                                    body: [
+                                        Text(
+                                            Inlined(
+                                                InlineStr {
+                                                    inner: [
+                                                        87,
+                                                        105,
+                                                        116,
+                                                        104,
+                                                        32,
+                                                        115,
+                                                        111,
+                                                        109,
+                                                        101,
+                                                        32,
+                                                        101,
+                                                        120,
+                                                        116,
+                                                        114,
+                                                        97,
+                                                        32,
+                                                        116,
+                                                        101,
+                                                        120,
+                                                        116,
+                                                        0,
+                                                        0,
+                                                    ],
+                                                    len: 20,
+                                                },
+                                            ),
+                                        ),
+                                    ],
+                                },
                             ),
                         ],
-                    },
-                    ListItem {
-                        body: [
-                            Text(
-                                Inlined(
-                                    InlineStr {
-                                        inner: [
-                                            91,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                        ],
-                                        len: 1,
-                                    },
-                                ),
-                            ),
-                            Text(
-                                Inlined(
-                                    InlineStr {
-                                        inner: [
-                                            46,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                        ],
-                                        len: 1,
-                                    },
-                                ),
-                            ),
-                            Text(
-                                Inlined(
-                                    InlineStr {
-                                        inner: [
-                                            93,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                            0,
-                                        ],
-                                        len: 1,
-                                    },
-                                ),
-                            ),
-                            Text(
-                                Boxed(
-                                    " Partially complete task",
-                                ),
+                    ),
+                    Block(
+                        [
+                            Paragraph(
+                                Paragraph {
+                                    body: [
+                                        TasklistMarker(
+                                            true,
+                                        ),
+                                        Text(
+                                            Boxed(
+                                                "Traditional complete task",
+                                            ),
+                                        ),
+                                    ],
+                                },
                             ),
                         ],
-                    },
+                    ),
+                    Block(
+                        [
+                            Paragraph(
+                                Paragraph {
+                                    body: [
+                                        Text(
+                                            Inlined(
+                                                InlineStr {
+                                                    inner: [
+                                                        91,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                    ],
+                                                    len: 1,
+                                                },
+                                            ),
+                                        ),
+                                        Text(
+                                            Inlined(
+                                                InlineStr {
+                                                    inner: [
+                                                        100,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                    ],
+                                                    len: 1,
+                                                },
+                                            ),
+                                        ),
+                                        Text(
+                                            Inlined(
+                                                InlineStr {
+                                                    inner: [
+                                                        93,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                    ],
+                                                    len: 1,
+                                                },
+                                            ),
+                                        ),
+                                        Text(
+                                            Inlined(
+                                                InlineStr {
+                                                    inner: [
+                                                        32,
+                                                        84,
+                                                        97,
+                                                        115,
+                                                        107,
+                                                        32,
+                                                        116,
+                                                        111,
+                                                        32,
+                                                        98,
+                                                        101,
+                                                        32,
+                                                        100,
+                                                        114,
+                                                        111,
+                                                        112,
+                                                        112,
+                                                        101,
+                                                        100,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                    ],
+                                                    len: 19,
+                                                },
+                                            ),
+                                        ),
+                                    ],
+                                },
+                            ),
+                        ],
+                    ),
+                    Block(
+                        [
+                            Paragraph(
+                                Paragraph {
+                                    body: [
+                                        Text(
+                                            Inlined(
+                                                InlineStr {
+                                                    inner: [
+                                                        91,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                    ],
+                                                    len: 1,
+                                                },
+                                            ),
+                                        ),
+                                        Text(
+                                            Inlined(
+                                                InlineStr {
+                                                    inner: [
+                                                        46,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                    ],
+                                                    len: 1,
+                                                },
+                                            ),
+                                        ),
+                                        Text(
+                                            Inlined(
+                                                InlineStr {
+                                                    inner: [
+                                                        93,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                        0,
+                                                    ],
+                                                    len: 1,
+                                                },
+                                            ),
+                                        ),
+                                        Text(
+                                            Boxed(
+                                                " Partially complete task",
+                                            ),
+                                        ),
+                                    ],
+                                },
+                            ),
+                        ],
+                    ),
                 ],
             },
         ),
@@ -1933,8 +1994,8 @@ Document {
                     1,
                 ),
                 items: [
-                    ListItem {
-                        body: [
+                    Inline(
+                        [
                             Text(
                                 Inlined(
                                     InlineStr {
@@ -1967,9 +2028,9 @@ Document {
                                 ),
                             ),
                         ],
-                    },
-                    ListItem {
-                        body: [
+                    ),
+                    Inline(
+                        [
                             TasklistMarker(
                                 true,
                             ),
@@ -2005,7 +2066,7 @@ Document {
                                 ),
                             ),
                         ],
-                    },
+                    ),
                 ],
             },
         ),
@@ -2088,13 +2149,15 @@ Document {
                             ),
                         ],
                         definitions: [
-                            [
-                                Text(
-                                    Boxed(
-                                        "This is the definition of the first term.",
+                            DefinitionDefinition {
+                                body: [
+                                    Text(
+                                        Boxed(
+                                            "This is the definition of the first term.",
+                                        ),
                                     ),
-                                ),
-                            ],
+                                ],
+                            },
                         ],
                     },
                     DefinitionItem {
@@ -2132,20 +2195,24 @@ Document {
                             ),
                         ],
                         definitions: [
-                            [
-                                Text(
-                                    Boxed(
-                                        "This is one definition of the second term.",
+                            DefinitionDefinition {
+                                body: [
+                                    Text(
+                                        Boxed(
+                                            "This is one definition of the second term.",
+                                        ),
                                     ),
-                                ),
-                            ],
-                            [
-                                Text(
-                                    Boxed(
-                                        "This is another definition of the second term.",
+                                ],
+                            },
+                            DefinitionDefinition {
+                                body: [
+                                    Text(
+                                        Boxed(
+                                            "This is another definition of the second term.",
+                                        ),
                                     ),
-                                ),
-                            ],
+                                ],
+                            },
                         ],
                     },
                 ],

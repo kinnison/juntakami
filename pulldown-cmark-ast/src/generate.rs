@@ -149,7 +149,10 @@ impl List {
 impl ListItem {
     fn push_events(&self, events: &mut Vec<Event<'static>>) {
         events.push(Event::Start(Tag::Item));
-        self.body.iter().for_each(|i| i.push_events(events));
+        match self {
+            ListItem::Inline(vec) => vec.iter().for_each(|i| i.push_events(events)),
+            ListItem::Block(vec) => vec.iter().for_each(|b| b.push_events(events)),
+        }
         events.push(Event::End(TagEnd::Item));
     }
 }

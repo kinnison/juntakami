@@ -317,15 +317,40 @@ impl List {
         let end = TagEnd::from(Tag::List(start));
         loop {
             match events.next().unwrap() {
-                Event::Start(Tag::Item) => items.push(ListItem {
-                    body: Inline::from_events(events, TagEnd::Item),
-                }),
+                Event::Start(Tag::Item) => items.push(ListItem::from_events(events)),
                 Event::End(e) if e == end => break,
                 _ => unreachable!(),
             }
         }
 
         Self { start, items }
+    }
+}
+
+impl ListItem {
+    fn from_events<'a>(events: &mut Peekable<impl Iterator<Item = Event<'a>>>) -> Self {
+        if matches!(
+            events.peek().unwrap(),
+            Event::Text(_)
+                | Event::Start(Tag::Image { .. })
+                | Event::Start(Tag::Link { .. })
+                | Event::Html(_)
+                | Event::SoftBreak
+                | Event::HardBreak
+                | Event::InlineMath(_)
+                | Event::DisplayMath(_)
+                | Event::InlineHtml(_)
+                | Event::Code(_)
+                | Event::FootnoteReference(_)
+                | Event::TaskListMarker(_)
+                | Event::Start(Tag::Emphasis)
+                | Event::Start(Tag::Strong)
+                | Event::Start(Tag::Strikethrough)
+        ) {
+            ListItem::Inline(Inline::from_events(events, TagEnd::Item))
+        } else {
+            ListItem::Block(Block::many_from_events(events, TagEnd::Item))
+        }
     }
 }
 

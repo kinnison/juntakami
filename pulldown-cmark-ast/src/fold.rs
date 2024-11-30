@@ -290,8 +290,9 @@ pub fn fold_list<F: MarkdownFold + ?Sized>(folder: &mut F, list: List) -> List {
 }
 
 pub fn fold_list_item<F: MarkdownFold + ?Sized>(folder: &mut F, list_item: ListItem) -> ListItem {
-    ListItem {
-        body: fold_inlines(folder, list_item.body),
+    match list_item {
+        ListItem::Inline(vec) => ListItem::Inline(fold_inlines(folder, vec)),
+        ListItem::Block(vec) => ListItem::Block(fold_blocks(folder, vec)),
     }
 }
 
