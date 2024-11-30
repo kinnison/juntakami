@@ -1,11 +1,10 @@
-use pulldown_cmark::Alignment;
-use pulldown_cmark::BlockQuoteKind;
-use pulldown_cmark::CodeBlockKind;
-use pulldown_cmark::CowStr;
-
-use pulldown_cmark::HeadingLevel;
-use pulldown_cmark::LinkType;
-use pulldown_cmark::MetadataBlockKind;
+pub use pulldown_cmark::Alignment;
+pub use pulldown_cmark::BlockQuoteKind;
+pub use pulldown_cmark::CodeBlockKind;
+pub use pulldown_cmark::CowStr;
+pub use pulldown_cmark::HeadingLevel;
+pub use pulldown_cmark::LinkType;
+pub use pulldown_cmark::MetadataBlockKind;
 
 #[derive(Debug, Clone)]
 pub struct Document {

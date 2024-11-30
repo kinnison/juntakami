@@ -13,6 +13,11 @@ pub use ast::*;
 #[cfg(feature = "generate")]
 pub mod fold;
 
+pub use pulldown_cmark::Options as ParseOptions;
+
+#[cfg(feature = "generate")]
+pub use pulldown_cmark_to_cmark::Options as RenderOptions;
+
 #[cfg(test)]
 mod test {
     use fold::MarkdownFold;
