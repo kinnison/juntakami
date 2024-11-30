@@ -13,7 +13,11 @@ use std::path::{Path, PathBuf};
 
 use eyre::{bail, Context, Result};
 use once_cell::sync::Lazy;
+use pulldown_cmark_ast::{fold::MarkdownFold, Document, ParseOptions, RenderOptions};
 use regex::Regex;
+use toml_edit::Item;
+
+use crate::config::Configuration;
 
 pub struct MarkdownFile {
     origin: PathBuf,
@@ -103,6 +107,38 @@ impl MarkdownFile {
             .frontmatter
             .entry("author")
             .or_insert(toml_edit::Item::None) = author.into();
+    }
+
+    pub fn keep_drop(&self) -> bool {
+        self.frontmatter
+            .get("keep")
+            .and_then(Item::as_bool)
+            .unwrap_or(false)
+    }
+
+    pub fn filter_markdown(&mut self, mut filter: impl MarkdownFold, config: &Configuration) {
+        let doc = Document::parse(&self.markdown, parse_opts());
+        let filtered = filter.fold_document(doc);
+        self.markdown = filtered
+            .render(render_opts(config))
+            .replace(r"\[.\]", "[.]")
+            .replace(r"\[d\]", "[d]");
+    }
+}
+
+fn parse_opts() -> ParseOptions {
+    ParseOptions::all().intersection(ParseOptions::ENABLE_SMART_PUNCTUATION.complement())
+}
+
+fn render_opts(config: &Configuration) -> RenderOptions<'_> {
+    RenderOptions {
+        list_token: config.list_char(),
+        strong_token: "**",
+        emphasis_token: '_',
+        ordered_list_token: '.',
+        code_block_token: '`',
+        increment_ordered_list_bullets: true,
+        ..Default::default()
     }
 }
 
