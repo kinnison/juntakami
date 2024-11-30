@@ -13,7 +13,7 @@ use tracing::{info, warn};
 use crate::{
     cli::InitArgs,
     config::{Configuration, CONFIG_FILENAME, JOURNAL_BASE, JOURNAL_ENTRY},
-    filters::KeepDrop,
+    filters::{KeepDrop, TodoFilter},
     git::Git,
     markdown::MarkdownFile,
 };
@@ -147,6 +147,7 @@ impl Journal {
         loaded.set_author(self.config.author());
 
         loaded.filter_markdown(KeepDrop::new(loaded.keep_drop()), &self.config);
+        loaded.filter_markdown(TodoFilter::new(), &self.config);
 
         std::fs::create_dir_all(new_filename.parent().unwrap()).with_context(|| {
             format!("Creating directories to lead to {}", new_filename.display())

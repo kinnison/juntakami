@@ -1,0 +1,35 @@
+---
+source: src/filters.rs
+expression: md.markdown()
+snapshot_kind: text
+---
+# no processing here
+
+- [ ] Should be empty
+- [.] Should be dot
+- [-] Should be dash
+- [x] Should be x
+- [F] Should be F
+- [d] Should be d
+- [D] Should be D
+- [/] Should be an unaffected slash
+
+# TODOs here { .todo }
+
+- [ ] Should remain empty
+- [-] Should become dash
+- [ ] Should become empty
+- [F] Should become F
+- [D] Should become D
+- [/] Should be an unaffected slash
+
+# No processing again
+
+- [.] Should stay dot
+
+## Sublist { .todo }
+
+- [-] should become dash
+  - Doing more stuff
+  - [D] This should become D
+- [F] Should become F

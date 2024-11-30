@@ -32,6 +32,8 @@ static TOML_RE: Lazy<Regex> = Lazy::new(|| {
     .unwrap()
 });
 
+static LIST_TIDY_RE: Lazy<Regex> = Lazy::new(|| Regex::new(r"([\-\*] +)\\\[\\?(.)\\\] ").unwrap());
+
 impl MarkdownFile {
     pub fn load(path: impl AsRef<Path>) -> Result<Self> {
         fn _load(path: &Path) -> Result<MarkdownFile> {
@@ -65,6 +67,10 @@ impl MarkdownFile {
 
     pub fn origin(&self) -> &Path {
         &self.origin
+    }
+
+    pub fn markdown(&self) -> &str {
+        &self.markdown
     }
 
     pub fn render_raw(&self) -> String {
@@ -119,10 +125,9 @@ impl MarkdownFile {
     pub fn filter_markdown(&mut self, mut filter: impl MarkdownFold, config: &Configuration) {
         let doc = Document::parse(&self.markdown, parse_opts());
         let filtered = filter.fold_document(doc);
-        self.markdown = filtered
-            .render(render_opts(config))
-            .replace(r"\[.\]", "[.]")
-            .replace(r"\[d\]", "[d]");
+        self.markdown = LIST_TIDY_RE
+            .replace_all(&filtered.render(render_opts(config)), "$1[$2] ")
+            .into_owned();
     }
 }
 
