@@ -1,0 +1,98 @@
+---
+source: pulldown-cmark-ast/src/lib.rs
+expression: rendered
+snapshot_kind: text
+---
+# Purpose
+
+This constant covers everything that pulldown-cmark can generate.  If this parses and
+can be reconstituted then we're good. [^1]
+
+[^1]: Footnote one
+
+## Attributes { #name .foo .bar .glug .boo baz=cake wibble }
+
+![Stuff](image.png)
+
+It's also important to support [reflinks] and [normal links](somewhere)
+
+ > 
+ > Here's a block quote
+ > Which is multiple lines
+
+```
+foo bar
+```
+
+    indented code block
+    which has more than one line
+    
+
+<strong>Eww!</strong>
+
+<div class="cake">
+Markdown [link](ignored) and **bold** not applied
+</div>
+
+# Some mathematics
+
+You can $inline$ it.
+
+Or you can display it: $$ x = 2 
+y = 4 $$
+
+# Some Formatting
+
+This block starts with an underlined header.  
+We also have a hard break above
+and a soft break after.
+
+We can do _emphasised_ text, **strong** text, and ~~struck-through~~ text.
+
+---
+
+Let's play with tasks next
+
+- [ ] Traditional incomplete task
+- [x] Traditional complete task
+- \[d\] Task to be dropped
+- \[.\] Partially complete task
+
+1. A numbered list
+2. [x] done
+
+# Definition lists
+
+
+First Term
+: This is the definition of the first term.
+
+Second Term
+: This is one definition of the second term.
+: This is another definition of the second term.
+# Trailing metadata
+
++++
+foo = "bar"
+wibble = [1, 2, 3]
++++
+
+The above is still metadata, as is the below
+
+---
+yaml: metadata
+---
+
+# Table stuff
+
+|Syntax|Description|Test Text|
+|:-----|:---------:|--------:|
+|Header|Title|Here's this|
+|Paragraph|Text|And more|
+
+|Syntax|Description|Test Text|
+|------|-----------|---------|
+|Header|Title|Here's this|
+|Paragraph|Text|And more|
+
+[reflinks]: https://cheese.com

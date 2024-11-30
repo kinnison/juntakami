@@ -3,6 +3,9 @@ name = "juntakami"
 version = "0.1.0"
 edition = "2021"
 
+[workspace]
+members = ["pulldown-cmark-ast"]
+
 [dependencies]
 clap = { version = "4.5.21", features = ["derive", "env"] }
 color-eyre = "0.6.3"
