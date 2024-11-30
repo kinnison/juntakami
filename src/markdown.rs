@@ -22,6 +22,7 @@ use crate::config::Configuration;
 pub struct MarkdownFile {
     origin: PathBuf,
     frontmatter: toml_edit::DocumentMut,
+    newlines: usize,
     markdown: String,
 }
 
@@ -53,7 +54,13 @@ impl MarkdownFile {
         };
         // If we matched then caps[1] is the frontmatter and caps[2] is the markdown
         let frontmatter = caps.get(1).map(|m| m.as_str()).unwrap_or("");
-        let markdown = caps.get(2).map(|m| m.as_str()).unwrap_or("").to_owned();
+        let mut markdown = caps.get(2).map(|m| m.as_str()).unwrap_or("").to_owned();
+        let mut newlines = 0;
+        while markdown.starts_with("\n") {
+            newlines += 1;
+            markdown = markdown[1..].to_string();
+        }
+
         let frontmatter = frontmatter
             .parse()
             .with_context(|| format!("Trying to parse frontmatter from: {}", origin.display()))?;
@@ -61,6 +68,7 @@ impl MarkdownFile {
         Ok(MarkdownFile {
             origin,
             frontmatter,
+            newlines,
             markdown,
         })
     }
@@ -78,7 +86,8 @@ impl MarkdownFile {
         if !frontmatter.ends_with('\n') {
             frontmatter.push('\n');
         }
-        format!("+++\n{frontmatter}+++\n{}", self.markdown)
+        let newlines: String = std::iter::repeat_n('\n', self.newlines).collect();
+        format!("+++\n{frontmatter}+++\n{}{}", newlines, self.markdown)
     }
 
     pub fn write_raw(&self, target: Option<impl AsRef<Path>>) -> Result<()> {
