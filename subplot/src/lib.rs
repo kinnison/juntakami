@@ -19,7 +19,10 @@ pub fn _jt_binary_on_path(context: &ScenarioContext, bin: &Path) {
         },
         false,
     )?;
+    #[cfg(unix)]
     std::os::unix::fs::symlink(bin, h.join("jt"))?;
+    #[cfg(windows)]
+    std::os::windows::fs::symlink_file(bin, j.join("jt.exe"))?;
     context.with_mut(
         |context: &mut Runcmd| {
             context.prepend_to_path(h);
