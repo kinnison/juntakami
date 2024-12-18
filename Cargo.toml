@@ -5,7 +5,7 @@ edition = "2021"
 rust-version = "1.82.0"
 
 [workspace]
-members = ["pulldown-cmark-ast"]
+members = ["pulldown-cmark-ast", "subplot"]
 
 [dependencies]
 clap = { version = "4.5.21", features = ["derive", "env"] }
@@ -27,3 +27,8 @@ whoami = { version = "1.5.2", default-features = false }
 [dev-dependencies]
 insta = "1.41.1"
 rstest = { version = "0.23.0", default-features = false }
+juntakami-steps = { path = "subplot" }
+culpa = "*"
+
+[build-dependencies]
+subplot-build = "*"

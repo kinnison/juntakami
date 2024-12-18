@@ -1,0 +1,16 @@
+# Bindings for Jun Takami specifically
+
+- given: a jt binary on the path
+  impl:
+    rust:
+      function: jt_binary_on_path
+
+- given: a unique home directory
+  impl:
+    rust:
+      function: juntakami_steps::given_unique_home_dir
+
+- then: a journal exists at {loc:path}
+  impl:
+    rust:
+      function: juntakami_steps::journal_exists_at

@@ -1,0 +1,11 @@
+# Configuration for testing jt using Subplot
+title: Jun Takami - A Journalling Tool
+bindings:
+- jt.yaml
+- lib/runcmd.yaml
+- lib/files.yaml
+impls: 
+  rust:
+  - jt.rs
+markdowns:
+- docs/intro.md
