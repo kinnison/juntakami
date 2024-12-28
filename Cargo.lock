@@ -364,6 +364,12 @@ dependencies = [
 ]
 
 [[package]]
+name = "descape"
+version = "2.0.3"
+source = "registry+https://github.com/rust-lang/crates.io-index"
+checksum = "7c1113b908df80c963b107424498e37fba986b424b605729d1492dfbe4b2a630"
+
+[[package]]
 name = "deunicode"
 version = "1.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -401,29 +407,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "env_filter"
-version = "0.1.2"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4f2c92ceda6ceec50f43169f9ee8424fe2db276791afde7b2cd8bc084cb376ab"
-dependencies = [
- "log",
- "regex",
-]
-
-[[package]]
-name = "env_logger"
-version = "0.11.5"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "e13fa619b91fb2381732789fc5de83b45675e882f66623b7d8cb4f643017018d"
-dependencies = [
- "anstream",
- "anstyle",
- "env_filter",
- "humantime",
- "log",
-]
-
-[[package]]
 name = "equivalent"
 version = "1.0.1"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -454,12 +437,6 @@ name = "fastrand"
 version = "2.3.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "37909eebbb50d72f9059c3b6d82c0463f2ff062c9e95845c43a6c9c0355411be"
-
-[[package]]
-name = "file_diff"
-version = "1.0.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "31a7a908b8f32538a2143e59a6e4e2508988832d5d4d6f7c156b3cbc762643a5"
 
 [[package]]
 name = "filetime"
@@ -656,12 +633,6 @@ dependencies = [
 ]
 
 [[package]]
-name = "humantime"
-version = "2.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "9a3a5bfb195931eeb336b2a7b4d761daec841b97f947d34394601737a7bba5e4"
-
-[[package]]
 name = "ignore"
 version = "0.4.23"
 source = "registry+https://github.com/rust-lang/crates.io-index"
@@ -734,7 +705,7 @@ dependencies = [
  "regex",
  "rstest",
  "serde",
- "subplot-build",
+ "subplotlib",
  "time",
  "toml",
  "toml_edit",
@@ -942,7 +913,7 @@ source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "8b7cafe60d6cf8e62e1b9b2ea516a089c008945bb5a275416789e7db0bc199dc"
 dependencies = [
  "memchr",
- "thiserror 2.0.8",
+ "thiserror",
  "ucd-trie",
 ]
 
@@ -1157,9 +1128,9 @@ checksum = "ba39f3699c378cd8970968dcbff9c43159ea4cfbd88d43c00b22f2ef10a435d2"
 
 [[package]]
 name = "remove_dir_all"
-version = "0.8.4"
+version = "1.0.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a694f9e0eb3104451127f6cc1e5de55f59d3b1fc8c5ddfaeb6f1e716479ceb4a"
+checksum = "808cc0b475acf76adf36f08ca49429b12aad9f678cb56143d5b3cb49b9a1dd08"
 dependencies = [
  "cfg-if",
  "cvt",
@@ -1171,17 +1142,16 @@ dependencies = [
 
 [[package]]
 name = "roadmap"
-version = "0.6.1"
+version = "0.7.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a84fec6085f0f4c56624c11864696961c96c47924f5c142cdc5fb2d11b2ca3e2"
+checksum = "ec49775c5134c7e4befdedecaf112bb72964baa9b24bedfc79b54c3ca0ee9f77"
 dependencies = [
  "anyhow",
- "clap",
  "marked-yaml",
  "serde",
  "tempfile",
  "textwrap",
- "thiserror 1.0.69",
+ "thiserror",
 ]
 
 [[package]]
@@ -1391,9 +1361,9 @@ checksum = "a8f112729512f8e442d81f95a8a7ddf2b7c6b8a1a6f509a95864142b30cab2d3"
 
 [[package]]
 name = "state"
-version = "0.5.3"
+version = "0.6.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "dbe866e1e51e8260c9eed836a042a5e7f6726bb2b411dffeaa712e19c388f23b"
+checksum = "2b8c4a4445d81357df8b1a650d0d0d6fbbbfe99d064aa5e02f3e4022061476d8"
 dependencies = [
  "loom",
 ]
@@ -1406,21 +1376,17 @@ checksum = "7da8b5736845d9f2fcb837ea5d9e2628564b3b043a70948a3f0b778838c5fb4f"
 
 [[package]]
 name = "subplot"
-version = "0.11.0"
+version = "0.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "f583157e3dae0c79c3c1f0567095eba8aca539caa1f63f159f17563cbb2f3da8"
+checksum = "5eb998cc5b2599ac493bd0fd2972013c3f3c11ef37800f6d2d2f4067d78a0c01"
 dependencies = [
  "anyhow",
  "base64",
- "clap",
- "env_logger",
- "file_diff",
+ "descape",
  "getopts",
- "git-testament",
  "html-escape",
  "lazy_static",
  "line-col",
- "log",
  "marked-yaml",
  "pikchr",
  "pulldown-cmark",
@@ -1429,57 +1395,42 @@ dependencies = [
  "serde",
  "serde_json",
  "slug",
- "tempfile",
- "tempfile-fast",
  "tera",
- "thiserror 1.0.69",
- "time",
+ "thiserror",
+ "tracing",
  "walkdir",
 ]
 
 [[package]]
-name = "subplot-build"
-version = "0.11.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b10a835ca0e75d3a61205c7006d62702f92a6d6930c6e5263d6c848fe48711f0"
-dependencies = [
- "subplot",
- "tempfile",
- "tracing",
-]
-
-[[package]]
 name = "subplotlib"
-version = "0.11.0"
+version = "0.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "41db916465aee14e3dd0a19fd5779fb78549ef4a16d9e519e63eb14529224789"
+checksum = "6ddf898c1d4ef62f77028b546f7baf9c1e661c927587249da0b0fa5ec5906422"
 dependencies = [
  "base64",
  "culpa",
  "filetime",
  "fs2",
- "glob",
  "lazy_static",
  "regex",
  "remove_dir_all",
  "shell-words",
  "state",
- "subplot-build",
  "subplotlib-derive",
  "tempfile",
  "time",
- "unescape",
 ]
 
 [[package]]
 name = "subplotlib-derive"
-version = "0.11.0"
+version = "0.12.0"
 source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "feaf4fcb9fdf075a7361f1a912ea54e80310c760721f20bd53058082b2144fab"
+checksum = "f37c9bc08dcdd72eb2a5f0d2f405c5384466c7c199921b00d4ab9d8f60972efb"
 dependencies = [
  "culpa",
  "proc-macro2",
  "quote",
+ "subplot",
  "syn",
 ]
 
@@ -1505,17 +1456,6 @@ dependencies = [
  "once_cell",
  "rustix",
  "windows-sys 0.59.0",
-]
-
-[[package]]
-name = "tempfile-fast"
-version = "0.3.4"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "a74be8531b1a9d607004a32b8f50dd8093b09ec6b0a6af004e33051068e87af6"
-dependencies = [
- "libc",
- "rand",
- "tempfile",
 ]
 
 [[package]]
@@ -1551,31 +1491,11 @@ dependencies = [
 
 [[package]]
 name = "thiserror"
-version = "1.0.69"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "b6aaf5339b578ea85b50e080feb250a3e8ae8cfcdff9a461c9ec2904bc923f52"
-dependencies = [
- "thiserror-impl 1.0.69",
-]
-
-[[package]]
-name = "thiserror"
 version = "2.0.8"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "08f5383f3e0071702bf93ab5ee99b52d26936be9dedd9413067cbdcddcb6141a"
 dependencies = [
- "thiserror-impl 2.0.8",
-]
-
-[[package]]
-name = "thiserror-impl"
-version = "1.0.69"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "4fee6c4efc90059e10f81e6d42c60a18f76588c3d74cb83a0b242a2b6c7504c1"
-dependencies = [
- "proc-macro2",
- "quote",
- "syn",
+ "thiserror-impl",
 ]
 
 [[package]]
@@ -1748,12 +1668,6 @@ name = "ucd-trie"
 version = "0.1.7"
 source = "registry+https://github.com/rust-lang/crates.io-index"
 checksum = "2896d95c02a80c6d6a5d6e953d479f5ddf2dfdb6a244441010e373ac0fb88971"
-
-[[package]]
-name = "unescape"
-version = "0.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "ccb97dac3243214f8d8507998906ca3e2e0b900bf9bf4870477f125b82e68f6e"
 
 [[package]]
 name = "unic-char-property"

@@ -1,1 +1,1 @@
-include!(concat!(env!("OUT_DIR"), "/juntakami.rs"));
+subplotlib::codegen!("subplot/juntakami.subplot");

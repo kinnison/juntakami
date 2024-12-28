@@ -4,5 +4,5 @@ version = "0.1.0"
 edition = "2021"
 
 [dependencies]
-subplotlib = "*"
-culpa = "*"
+subplotlib = { version = "0.12" }
+culpa = "*" # We really don't care which version so long as it matches subplotlib

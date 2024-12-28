@@ -28,7 +28,6 @@ whoami = { version = "1.5.2", default-features = false }
 insta = "1.41.1"
 rstest = { version = "0.23.0", default-features = false }
 juntakami-steps = { path = "subplot" }
-culpa = "*"
+subplotlib = { version = "0.12" }
+culpa = "*" # We really don't care which version so long as it matches subplotlib
 
-[build-dependencies]
-subplot-build = "*"
