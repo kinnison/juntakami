@@ -5,7 +5,6 @@ bindings:
 - lib/runcmd.yaml
 - lib/files.yaml
 impls: 
-  rust:
-  - jt.rs
+  rust: []
 markdowns:
 - ../docs/intro.md
