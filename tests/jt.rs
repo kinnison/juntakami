@@ -1,1 +1,1 @@
-subplotlib::codegen!("subplot/juntakami.subplot");
+subplotlib::codegen!("steps/juntakami.subplot");

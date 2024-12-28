@@ -8,4 +8,4 @@ impls:
   rust:
   - jt.rs
 markdowns:
-- docs/intro.md
+- ../docs/intro.md
