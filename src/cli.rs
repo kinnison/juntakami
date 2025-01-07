@@ -39,9 +39,9 @@ pub enum Cmd {
     /// Show the configuration of the journal
     ShowConfig,
     /// Prepare today's entry
-    Prep,
+    Prep(PrepArgs),
     /// Edit today's entry
-    Edit,
+    Edit(PrepArgs),
 }
 
 #[derive(Clone, Parser)]
@@ -55,5 +55,18 @@ pub struct InitArgs {
 impl InitArgs {
     pub fn force(&self) -> bool {
         self.force
+    }
+}
+
+#[derive(Clone, Parser)]
+pub struct PrepArgs {
+    #[clap(short, long)]
+    /// Log to edit (see config for default if not specified)
+    prefix: Option<String>,
+}
+
+impl PrepArgs {
+    pub fn prefix(&self) -> Option<&str> {
+        self.prefix.as_deref()
     }
 }

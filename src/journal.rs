@@ -77,14 +77,20 @@ impl Journal {
         Ok(())
     }
 
-    fn log_filename(&self, date: Date) -> Result<PathBuf> {
-        let leaf = date.format(self.config.log_pattern()).with_context(|| {
-            format!(
-                "Trying to format {date} using {:?}",
-                self.config.log_pattern()
-            )
-        })?;
-        Ok(self.base.join(leaf))
+    fn log_filename(&self, date: Date, prefix: Option<&str>) -> Result<PathBuf> {
+        let prefix = prefix.unwrap_or(self.config.default_log());
+        let leaf = date
+            .format(self.config.logging_pattern())
+            .with_context(|| {
+                format!(
+                    "Trying to format {date} using {:?}",
+                    self.config.logging_pattern()
+                )
+            })?;
+        let mut full_path = self.base.clone();
+        full_path.push(prefix);
+        full_path.push(leaf);
+        Ok(full_path)
     }
 
     fn now() -> Result<OffsetDateTime> {
@@ -95,7 +101,7 @@ impl Journal {
         Ok(Self::now()?.date())
     }
 
-    pub fn load_recent(&self) -> Result<Option<MarkdownFile>> {
+    pub fn load_recent(&self, prefix: Option<&str>) -> Result<Option<MarkdownFile>> {
         // Start with tomorrow, so that we can find today if it already exists
         let Some(tomorrow) = Self::today()?.next_day() else {
             bail!("Unable to determine tomorrow's date")
@@ -108,7 +114,7 @@ impl Journal {
             if tries == 0 {
                 return Ok(None);
             }
-            let log_entry = self.log_filename(to_check)?;
+            let log_entry = self.log_filename(to_check, prefix)?;
             if std::fs::exists(&log_entry).with_context(|| {
                 format!("Attempting to detect existence of {}", log_entry.display())
             })? {
@@ -123,7 +129,7 @@ impl Journal {
         }
     }
 
-    pub fn prep(&self) -> Result<()> {
+    pub fn prep(&self, prefix: Option<&str>) -> Result<()> {
         let now = Self::now()?;
         let new_title = now
             .format(self.config.title())
@@ -132,10 +138,10 @@ impl Journal {
             .format(self.config.created())
             .context("Attempting to create new created date")?;
         let mut loaded = self
-            .load_recent()?
+            .load_recent(prefix)?
             .unwrap_or_else(MarkdownFile::new_log_entry);
 
-        let new_filename = self.log_filename(now.date())?;
+        let new_filename = self.log_filename(now.date(), prefix)?;
         if new_filename == loaded.origin() {
             warn!("Today's entry already exists, not changing it");
             return Ok(());
@@ -156,14 +162,14 @@ impl Journal {
         loaded.write_raw(Some(new_filename))
     }
 
-    pub fn edit(&self) -> Result<()> {
+    pub fn edit(&self, prefix: Option<&str>) -> Result<()> {
         let editor = self.config.editor();
         let mut cmd = Command::new(editor[0].as_ref());
-        let log_filename = self.log_filename(Self::today()?)?;
+        let log_filename = self.log_filename(Self::today()?, prefix)?;
         if !std::fs::exists(&log_filename)
             .with_context(|| format!("Checking for existence of {}", log_filename.display()))?
         {
-            self.prep()?;
+            self.prep(prefix)?;
         }
         for arg in &editor[1..] {
             let arg = arg.as_ref();

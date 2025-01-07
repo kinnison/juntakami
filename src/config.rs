@@ -14,7 +14,8 @@ struct RawConfiguration {
 
 #[derive(Serialize, Deserialize)]
 struct RawDefaults {
-    log_pattern: String,
+    default_log: String,
+    logging_pattern: String,
     list_char: char,
     editor: Vec<String>,
 }
@@ -33,7 +34,8 @@ pub const JOURNAL_ENTRY: &str = "@ENTRY@";
 impl Default for RawDefaults {
     fn default() -> Self {
         Self {
-            log_pattern: "log/[year]-[month]-[day].md".into(),
+            default_log: "log".into(),
+            logging_pattern: "[year]-[month]-[day].md".into(),
             list_char: '-',
             editor: ["code", JOURNAL_BASE, JOURNAL_ENTRY]
                 .into_iter()
@@ -54,7 +56,7 @@ impl Default for RawLogMeta {
 }
 
 struct ParsedConfiguration {
-    log_pattern: OwnedFormatItem,
+    logging_pattern: OwnedFormatItem,
     log_meta: ParsedLogMeta,
 }
 
@@ -91,17 +93,18 @@ impl ParsedLogMeta {
 
 impl ParsedConfiguration {
     fn parse(path: &Path, raw: &RawConfiguration) -> Result<Self> {
-        let log_pattern = time::format_description::parse_owned::<2>(&raw.juntakami.log_pattern)
-            .with_context(|| {
-                format!(
-                    "Trying to parse log_pattern `{}` from {}",
-                    raw.juntakami.log_pattern,
-                    path.display()
-                )
-            })?;
+        let logging_pattern =
+            time::format_description::parse_owned::<2>(&raw.juntakami.logging_pattern)
+                .with_context(|| {
+                    format!(
+                        "Trying to parse log_pattern `{}` from {}",
+                        raw.juntakami.logging_pattern,
+                        path.display()
+                    )
+                })?;
         let log_meta = ParsedLogMeta::parse(path, &raw.log_meta)?;
         Ok(Self {
-            log_pattern,
+            logging_pattern,
             log_meta,
         })
     }
@@ -116,9 +119,13 @@ impl Default for Configuration {
 }
 
 impl Configuration {
+    /// Log prefix to use by default
+    pub fn default_log(&self) -> &str {
+        &self.raw.juntakami.default_log
+    }
     /// Log filename for a given date
-    pub fn log_pattern(&self) -> &OwnedFormatItem {
-        &self.parsed.log_pattern
+    pub fn logging_pattern(&self) -> &OwnedFormatItem {
+        &self.parsed.logging_pattern
     }
 
     /// The character to use for unordered lists
