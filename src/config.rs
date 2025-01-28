@@ -25,6 +25,7 @@ struct RawLogMeta {
     created: String,
     author: String,
     logging_pattern: String,
+    is_log: bool,
 }
 
 pub const CONFIG_FILENAME: &str = "juntakami.conf";
@@ -62,6 +63,7 @@ impl Default for RawLogMeta {
             title: "Daily log entry for [year]-[month]-[day]".into(),
             created: "[weekday repr:short], [day] [month repr:short] [year] [hour]:[minute]:[second] [offset_hour][offset_minute]".into(),
             author: whoami::realname(),
+            is_log: true,
         }
     }
 }
@@ -164,6 +166,11 @@ impl Configuration {
     /// The author to attribute new log entries to
     pub fn author(&self, pfx: Option<&str>) -> &str {
         &self.raw.meta[pfx.unwrap_or(self.default_log())].author
+    }
+
+    /// Whether or not a given prefix is actually a log
+    pub fn is_log(&self, pfx: Option<&str>) -> bool {
+        self.raw.meta[pfx.unwrap_or(self.default_log())].is_log
     }
 
     /// Get the raw config text

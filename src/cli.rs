@@ -63,10 +63,28 @@ pub struct PrepArgs {
     #[clap(short, long)]
     /// Log to edit (see config for default if not specified)
     prefix: Option<String>,
+
+    /// A slug to give to the generated log entry (only used if the prefix is not a log)
+    slug: Vec<String>,
 }
 
 impl PrepArgs {
     pub fn prefix(&self) -> Option<&str> {
         self.prefix.as_deref()
+    }
+
+    pub fn slug(&self) -> Option<String> {
+        if self.slug.is_empty() {
+            None
+        } else {
+            let mut ret = String::new();
+            for s in &self.slug {
+                if !ret.is_empty() {
+                    ret.push(' ')
+                }
+                ret.push_str(s);
+            }
+            Some(ret.replace(' ', "-"))
+        }
     }
 }

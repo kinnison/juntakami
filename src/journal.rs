@@ -77,8 +77,13 @@ impl Journal {
         Ok(())
     }
 
-    fn log_filename(&self, date: Date, prefix: Option<&str>) -> Result<PathBuf> {
-        let leaf = date
+    fn log_filename(
+        &self,
+        date: Date,
+        prefix: Option<&str>,
+        slug: Option<&str>,
+    ) -> Result<PathBuf> {
+        let mut leaf = date
             .format(self.config.logging_pattern(prefix))
             .with_context(|| {
                 format!(
@@ -86,6 +91,9 @@ impl Journal {
                     self.config.logging_pattern(prefix)
                 )
             })?;
+        if let Some(slug) = slug {
+            leaf = format!("{slug}-{leaf}");
+        }
         let prefix = prefix.unwrap_or(self.config.default_log());
         let mut full_path = self.base.clone();
         full_path.push(prefix);
@@ -101,7 +109,11 @@ impl Journal {
         Ok(Self::now()?.date())
     }
 
-    pub fn load_recent(&self, prefix: Option<&str>) -> Result<Option<MarkdownFile>> {
+    pub fn load_recent(
+        &self,
+        prefix: Option<&str>,
+        slug: Option<&str>,
+    ) -> Result<Option<MarkdownFile>> {
         // Start with tomorrow, so that we can find today if it already exists
         let Some(tomorrow) = Self::today()?.next_day() else {
             bail!("Unable to determine tomorrow's date")
@@ -114,7 +126,7 @@ impl Journal {
             if tries == 0 {
                 return Ok(None);
             }
-            let log_entry = self.log_filename(to_check, prefix)?;
+            let log_entry = self.log_filename(to_check, prefix, slug)?;
             if std::fs::exists(&log_entry).with_context(|| {
                 format!("Attempting to detect existence of {}", log_entry.display())
             })? {
@@ -129,7 +141,7 @@ impl Journal {
         }
     }
 
-    pub fn prep(&self, prefix: Option<&str>) -> Result<()> {
+    pub fn prep(&self, prefix: Option<&str>, slug: Option<&str>) -> Result<()> {
         let now = Self::now()?;
         let new_title = now
             .format(self.config.title(prefix))
@@ -137,11 +149,14 @@ impl Journal {
         let new_created = now
             .format(self.config.created(prefix))
             .context("Attempting to create new created date")?;
-        let mut loaded = self
-            .load_recent(prefix)?
-            .unwrap_or_else(MarkdownFile::new_log_entry);
+        let mut loaded = if self.config.is_log(prefix) {
+            self.load_recent(prefix, slug)?
+                .unwrap_or_else(MarkdownFile::new_log_entry)
+        } else {
+            MarkdownFile::new_empty()
+        };
 
-        let new_filename = self.log_filename(now.date(), prefix)?;
+        let new_filename = self.log_filename(now.date(), prefix, slug)?;
         if new_filename == loaded.origin() {
             warn!("Today's entry already exists, not changing it");
             return Ok(());
@@ -152,8 +167,10 @@ impl Journal {
         loaded.set_created(&new_created);
         loaded.set_author(self.config.author(prefix));
 
-        loaded.filter_markdown(KeepDrop::new(loaded.keep_drop()), &self.config);
-        loaded.filter_markdown(TodoFilter::new(), &self.config);
+        if self.config.is_log(prefix) {
+            loaded.filter_markdown(KeepDrop::new(loaded.keep_drop()), &self.config);
+            loaded.filter_markdown(TodoFilter::new(), &self.config);
+        }
 
         std::fs::create_dir_all(new_filename.parent().unwrap()).with_context(|| {
             format!("Creating directories to lead to {}", new_filename.display())
@@ -162,14 +179,14 @@ impl Journal {
         loaded.write_raw(Some(new_filename))
     }
 
-    pub fn edit(&self, prefix: Option<&str>) -> Result<()> {
+    pub fn edit(&self, prefix: Option<&str>, slug: Option<&str>) -> Result<()> {
         let editor = self.config.editor();
         let mut cmd = Command::new(editor[0].as_ref());
-        let log_filename = self.log_filename(Self::today()?, prefix)?;
+        let log_filename = self.log_filename(Self::today()?, prefix, slug)?;
         if !std::fs::exists(&log_filename)
             .with_context(|| format!("Checking for existence of {}", log_filename.display()))?
         {
-            self.prep(prefix)?;
+            self.prep(prefix, slug)?;
         }
         for arg in &editor[1..] {
             let arg = arg.as_ref();

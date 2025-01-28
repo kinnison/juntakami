@@ -138,6 +138,10 @@ impl MarkdownFile {
             .replace_all(&filtered.render(render_opts(config)), "$1[$2] ")
             .into_owned();
     }
+
+    pub fn new_empty() -> MarkdownFile {
+        Self::parse(Path::new(""), "").unwrap()
+    }
 }
 
 fn parse_opts() -> ParseOptions {

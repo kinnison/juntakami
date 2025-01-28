@@ -46,8 +46,8 @@ fn main() -> Result<()> {
         Cmd::Init(_) => {}
         Cmd::Status => journal.show_status()?,
         Cmd::ShowConfig => journal.show_config()?,
-        Cmd::Prep(a) => journal.prep(a.prefix())?,
-        Cmd::Edit(a) => journal.edit(a.prefix())?,
+        Cmd::Prep(a) => journal.prep(a.prefix(), a.slug().as_deref())?,
+        Cmd::Edit(a) => journal.edit(a.prefix(), a.slug().as_deref())?,
     }
 
     Ok(())
