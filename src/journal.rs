@@ -78,15 +78,15 @@ impl Journal {
     }
 
     fn log_filename(&self, date: Date, prefix: Option<&str>) -> Result<PathBuf> {
-        let prefix = prefix.unwrap_or(self.config.default_log());
         let leaf = date
-            .format(self.config.logging_pattern())
+            .format(self.config.logging_pattern(prefix))
             .with_context(|| {
                 format!(
                     "Trying to format {date} using {:?}",
-                    self.config.logging_pattern()
+                    self.config.logging_pattern(prefix)
                 )
             })?;
+        let prefix = prefix.unwrap_or(self.config.default_log());
         let mut full_path = self.base.clone();
         full_path.push(prefix);
         full_path.push(leaf);
@@ -132,10 +132,10 @@ impl Journal {
     pub fn prep(&self, prefix: Option<&str>) -> Result<()> {
         let now = Self::now()?;
         let new_title = now
-            .format(self.config.title())
+            .format(self.config.title(prefix))
             .context("Attempting to create new title")?;
         let new_created = now
-            .format(self.config.created())
+            .format(self.config.created(prefix))
             .context("Attempting to create new created date")?;
         let mut loaded = self
             .load_recent(prefix)?
@@ -150,7 +150,7 @@ impl Journal {
 
         loaded.set_title(&new_title);
         loaded.set_created(&new_created);
-        loaded.set_author(self.config.author());
+        loaded.set_author(self.config.author(prefix));
 
         loaded.filter_markdown(KeepDrop::new(loaded.keep_drop()), &self.config);
         loaded.filter_markdown(TodoFilter::new(), &self.config);

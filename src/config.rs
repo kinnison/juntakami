@@ -1,21 +1,20 @@
 //! Configuration for journals
 
-use std::path::Path;
+use std::{collections::HashMap, path::Path};
 
 use eyre::{bail, Context, Result};
 use serde::{Deserialize, Serialize};
 use time::format_description::OwnedFormatItem;
 
-#[derive(Default, Serialize, Deserialize)]
+#[derive(Serialize, Deserialize)]
 struct RawConfiguration {
     juntakami: RawDefaults,
-    log_meta: RawLogMeta,
+    meta: HashMap<String, RawLogMeta>,
 }
 
 #[derive(Serialize, Deserialize)]
 struct RawDefaults {
     default_log: String,
-    logging_pattern: String,
     list_char: char,
     editor: Vec<String>,
 }
@@ -25,17 +24,28 @@ struct RawLogMeta {
     title: String,
     created: String,
     author: String,
+    logging_pattern: String,
 }
 
 pub const CONFIG_FILENAME: &str = "juntakami.conf";
 pub const JOURNAL_BASE: &str = "@JOURNAL@";
 pub const JOURNAL_ENTRY: &str = "@ENTRY@";
 
+impl Default for RawConfiguration {
+    fn default() -> Self {
+        let juntakami = RawDefaults::default();
+        let meta: HashMap<String, RawLogMeta> =
+            [(juntakami.default_log.clone(), RawLogMeta::default())]
+                .into_iter()
+                .collect();
+        Self { juntakami, meta }
+    }
+}
+
 impl Default for RawDefaults {
     fn default() -> Self {
         Self {
             default_log: "log".into(),
-            logging_pattern: "[year]-[month]-[day].md".into(),
             list_char: '-',
             editor: ["code", JOURNAL_BASE, JOURNAL_ENTRY]
                 .into_iter()
@@ -48,6 +58,7 @@ impl Default for RawDefaults {
 impl Default for RawLogMeta {
     fn default() -> Self {
         Self {
+            logging_pattern: "[year]-[month]-[day].md".into(),
             title: "Daily log entry for [year]-[month]-[day]".into(),
             created: "[weekday repr:short], [day] [month repr:short] [year] [hour]:[minute]:[second] [offset_hour][offset_minute]".into(),
             author: whoami::realname(),
@@ -56,11 +67,11 @@ impl Default for RawLogMeta {
 }
 
 struct ParsedConfiguration {
-    logging_pattern: OwnedFormatItem,
-    log_meta: ParsedLogMeta,
+    meta: HashMap<String, ParsedLogMeta>,
 }
 
 struct ParsedLogMeta {
+    logging_pattern: OwnedFormatItem,
     title: OwnedFormatItem,
     created: OwnedFormatItem,
 }
@@ -72,6 +83,14 @@ pub struct Configuration {
 
 impl ParsedLogMeta {
     fn parse(path: &Path, raw: &RawLogMeta) -> Result<Self> {
+        let logging_pattern = time::format_description::parse_owned::<2>(&raw.logging_pattern)
+            .with_context(|| {
+                format!(
+                    "Trying to parse log_pattern `{}` from {}",
+                    raw.logging_pattern,
+                    path.display()
+                )
+            })?;
         let title = time::format_description::parse_owned::<2>(&raw.title).with_context(|| {
             format!(
                 "Trying to parse log_meta.title `{}` from {}",
@@ -87,26 +106,21 @@ impl ParsedLogMeta {
                     path.display()
                 )
             })?;
-        Ok(Self { title, created })
+        Ok(Self {
+            logging_pattern,
+            title,
+            created,
+        })
     }
 }
 
 impl ParsedConfiguration {
     fn parse(path: &Path, raw: &RawConfiguration) -> Result<Self> {
-        let logging_pattern =
-            time::format_description::parse_owned::<2>(&raw.juntakami.logging_pattern)
-                .with_context(|| {
-                    format!(
-                        "Trying to parse log_pattern `{}` from {}",
-                        raw.juntakami.logging_pattern,
-                        path.display()
-                    )
-                })?;
-        let log_meta = ParsedLogMeta::parse(path, &raw.log_meta)?;
-        Ok(Self {
-            logging_pattern,
-            log_meta,
-        })
+        let mut meta = HashMap::new();
+        for (k, v) in &raw.meta {
+            meta.insert(k.clone(), ParsedLogMeta::parse(path, v)?);
+        }
+        Ok(Self { meta })
     }
 }
 
@@ -124,8 +138,8 @@ impl Configuration {
         &self.raw.juntakami.default_log
     }
     /// Log filename for a given date
-    pub fn logging_pattern(&self) -> &OwnedFormatItem {
-        &self.parsed.logging_pattern
+    pub fn logging_pattern(&self, prefix: Option<&str>) -> &OwnedFormatItem {
+        &self.meta(prefix).logging_pattern
     }
 
     /// The character to use for unordered lists
@@ -133,19 +147,23 @@ impl Configuration {
         self.raw.juntakami.list_char
     }
 
+    fn meta(&self, pfx: Option<&str>) -> &ParsedLogMeta {
+        &self.parsed.meta[pfx.unwrap_or(self.default_log())]
+    }
+
     /// The title to give to new log entries
-    pub fn title(&self) -> &OwnedFormatItem {
-        &self.parsed.log_meta.title
+    pub fn title(&self, pfx: Option<&str>) -> &OwnedFormatItem {
+        &self.meta(pfx).title
     }
 
     /// The created text to give to new log entries
-    pub fn created(&self) -> &OwnedFormatItem {
-        &self.parsed.log_meta.created
+    pub fn created(&self, pfx: Option<&str>) -> &OwnedFormatItem {
+        &self.meta(pfx).created
     }
 
     /// The author to attribute new log entries to
-    pub fn author(&self) -> &str {
-        &self.raw.log_meta.author
+    pub fn author(&self, pfx: Option<&str>) -> &str {
+        &self.raw.meta[pfx.unwrap_or(self.default_log())].author
     }
 
     /// Get the raw config text
