@@ -34,6 +34,9 @@ can be reconstituted then we're good. [^1]
 
 [^1]: Footnote one
 
+Nimrod struggled with inline code with generics.  He was seeing HTML get
+confused into the matter.  `Parser<B>::location()` for example, screwed up
+
 ## Attributes { #name .foo .bar baz=cake wibble .glug .boo }
 
 ![Stuff](image.png)

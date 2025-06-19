@@ -1,7 +1,6 @@
 ---
 source: pulldown-cmark-ast/src/lib.rs
 expression: doc
-snapshot_kind: text
 ---
 Document {
     blocks: [
@@ -162,6 +161,59 @@ Document {
                                 ),
                             ],
                         },
+                    ),
+                ],
+            },
+        ),
+        Paragraph(
+            Paragraph {
+                body: [
+                    Text(
+                        Boxed(
+                            "Nimrod struggled with inline code with generics.  He was seeing HTML get",
+                        ),
+                    ),
+                    SoftBreak,
+                    Text(
+                        Boxed(
+                            "confused into the matter.  ",
+                        ),
+                    ),
+                    Code(
+                        Inlined(
+                            InlineStr {
+                                inner: [
+                                    80,
+                                    97,
+                                    114,
+                                    115,
+                                    101,
+                                    114,
+                                    60,
+                                    66,
+                                    62,
+                                    58,
+                                    58,
+                                    108,
+                                    111,
+                                    99,
+                                    97,
+                                    116,
+                                    105,
+                                    111,
+                                    110,
+                                    40,
+                                    41,
+                                    0,
+                                ],
+                                len: 21,
+                            },
+                        ),
+                    ),
+                    Text(
+                        Boxed(
+                            " for example, screwed up",
+                        ),
                     ),
                 ],
             },

@@ -24,6 +24,6 @@
           inherit juntakami;
           default = juntakami;
         };
-        devShells.default = mkShell { buildInputs = [ gnumake ]; };
+        devShells.default = mkShell { buildInputs = [ gnumake cargo-insta ]; };
       });
 }
