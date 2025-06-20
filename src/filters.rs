@@ -147,6 +147,8 @@ enum ItemKind {
     WasComplete,
     Dropping,
     Dropped,
+    Pausing,
+    Paused,
 }
 
 impl ItemKind {
@@ -160,6 +162,8 @@ impl ItemKind {
             ItemKind::WasComplete => ItemKind::WasComplete,
             ItemKind::Dropping => ItemKind::Dropped,
             ItemKind::Dropped => ItemKind::Dropped,
+            ItemKind::Pausing => ItemKind::Paused,
+            ItemKind::Paused => ItemKind::Paused,
         }
     }
 
@@ -178,6 +182,8 @@ impl From<char> for ItemKind {
             'F' => Self::WasComplete,
             'd' => Self::Dropping,
             'D' => Self::Dropped,
+            'p' => Self::Pausing,
+            'P' => Self::Paused,
             _ => Self::PassThru,
         }
     }
@@ -297,7 +303,7 @@ impl TodoFilter {
             }
         }
         match kind {
-            ItemKind::Partial | ItemKind::Dropping | ItemKind::PassThru => {
+            ItemKind::Partial | ItemKind::Dropping | ItemKind::Pausing | ItemKind::PassThru => {
                 unreachable!()
             }
 
@@ -306,6 +312,7 @@ impl TodoFilter {
             ItemKind::WasPartial => Self::insert_char(bits, '-'),
             ItemKind::WasComplete => Self::insert_char(bits, 'F'),
             ItemKind::Dropped => Self::insert_char(bits, 'D'),
+            ItemKind::Paused => Self::insert_char(bits, 'P'),
         }
     }
 
@@ -465,6 +472,8 @@ Maybe see this?
 - [F] Should be F
 - [d] Should be d
 - [D] Should be D
+- [p] Should be p
+- [P] Should be P
 - [/] Should be an unaffected slash
 
 # TODOs here { .todo }
@@ -476,6 +485,8 @@ Maybe see this?
 - [F] Should vanish
 - [d] Should become D
 - [D] Should vanish
+- [p] Should become P
+- [P] Should remain P
 - [/] Should be an unaffected slash
 
 # No processing again

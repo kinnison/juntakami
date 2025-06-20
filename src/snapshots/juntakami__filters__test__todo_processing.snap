@@ -1,7 +1,6 @@
 ---
 source: src/filters.rs
 expression: md.markdown()
-snapshot_kind: text
 ---
 # no processing here
 
@@ -12,6 +11,8 @@ snapshot_kind: text
 - [F] Should be F
 - [d] Should be d
 - [D] Should be D
+- [p] Should be p
+- [P] Should be P
 - [/] Should be an unaffected slash
 
 # TODOs here { .todo }
@@ -21,6 +22,8 @@ snapshot_kind: text
 - [ ] Should become empty
 - [F] Should become F
 - [D] Should become D
+- [P] Should become P
+- [P] Should remain P
 - [/] Should be an unaffected slash
 
 # No processing again
