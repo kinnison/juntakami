@@ -9,8 +9,8 @@ generate = ["dep:pulldown-cmark-to-cmark"]
 fold = []
 
 [dependencies]
-pulldown-cmark = { version = "0.12.2", default-features = false }
-pulldown-cmark-to-cmark = { version = "19.0.0", default-features = false, optional = true }
+pulldown-cmark = { version = "0.13.0", default-features = false }
+pulldown-cmark-to-cmark = { version = "21.1.0", default-features = false, optional = true }
 
 [dev-dependencies]
 insta = "1.41.1"
