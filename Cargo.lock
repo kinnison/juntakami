@@ -1064,8 +1064,7 @@ checksum = "007d8adb5ddab6f8e3f491ac63566a7d5002cc7ed73901f72057943fa71ae1ae"
 [[package]]
 name = "pulldown-cmark-to-cmark"
 version = "21.1.0"
-source = "registry+https://github.com/rust-lang/crates.io-index"
-checksum = "8246feae3db61428fd0bb94285c690b460e4517d83152377543ca802357785f1"
+source = "git+https://github.com/kinnison/pulldown-cmark-to-cmark#4fa1f9eab4754267e2d6580fe7e64f8aa4c113fa"
 dependencies = [
  "pulldown-cmark",
 ]

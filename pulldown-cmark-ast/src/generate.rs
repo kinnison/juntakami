@@ -68,6 +68,16 @@ impl Inline {
                 vec.iter().for_each(|i| i.push_events(events));
                 events.push(Event::End(TagEnd::Strikethrough));
             }
+            Inline::Superscript(vec) => {
+                events.push(Event::Start(Tag::Superscript));
+                vec.iter().for_each(|i| i.push_events(events));
+                events.push(Event::End(TagEnd::Superscript));
+            }
+            Inline::Subscript(vec) => {
+                events.push(Event::Start(Tag::Superscript));
+                vec.iter().for_each(|i| i.push_events(events));
+                events.push(Event::End(TagEnd::Superscript));
+            }
             Inline::SoftBreak => events.push(Event::SoftBreak),
             Inline::HardBreak => events.push(Event::HardBreak),
             Inline::TasklistMarker(b) => events.push(Event::TaskListMarker(*b)),

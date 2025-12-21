@@ -60,6 +60,8 @@ impl Block {
                     | Tag::Emphasis
                     | Tag::Strong
                     | Tag::Strikethrough
+                    | Tag::Superscript
+                    | Tag::Subscript
                     | Tag::Link { .. }
                     | Tag::Image { .. } => {
                         unreachable!("The tag {tag:?} should not be reachable from Block context")
@@ -165,6 +167,14 @@ impl Inline {
                     Tag::Strikethrough => ret.push(Self::Strikethrough(Inline::from_events(
                         events,
                         TagEnd::Strikethrough,
+                    ))),
+                    Tag::Superscript => ret.push(Self::Superscript(Inline::from_events(
+                        events,
+                        TagEnd::Superscript,
+                    ))),
+                    Tag::Subscript => ret.push(Self::Subscript(Inline::from_events(
+                        events,
+                        TagEnd::Subscript,
                     ))),
 
                     heading @ Tag::Heading { .. } => {

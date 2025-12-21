@@ -33,6 +33,14 @@ pub trait MarkdownFold {
         fold_inlines(self, inlines)
     }
 
+    fn fold_superscript(&mut self, inlines: Vec<Inline>) -> Vec<Inline> {
+        fold_inlines(self, inlines)
+    }
+
+    fn fold_subscript(&mut self, inlines: Vec<Inline>) -> Vec<Inline> {
+        fold_inlines(self, inlines)
+    }
+
     fn fold_text(&mut self, text: CowStr<'static>) -> CowStr<'static> {
         text
     }
@@ -210,6 +218,8 @@ pub fn fold_inline<F: MarkdownFold + ?Sized>(folder: &mut F, inline: Inline) -> 
         Inline::Strong(inlines) => Inline::Strong(folder.fold_strong(inlines)),
         Inline::Strikethrough(inlines) => Inline::Strikethrough(folder.fold_strikethrough(inlines)),
         Inline::InlineBlock(b) => Inline::InlineBlock(folder.fold_block(b)),
+        Inline::Superscript(inlines) => Inline::Superscript(folder.fold_superscript(inlines)),
+        Inline::Subscript(inlines) => Inline::Subscript(folder.fold_subscript(inlines)),
     }
 }
 

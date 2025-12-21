@@ -75,7 +75,9 @@ This block starts with an underlined header.
 We also have a hard break above
 and a soft break after.
 
-We can do _emphasised_ text, **strong** text, and ~struck-through~ text.
+We can do _emphasised_ text, **strong** text, and ~~struck-through~~ text.
+
+Also, we support super ^script^ and sub ~script~ in text.
 
 ---
 
@@ -150,6 +152,8 @@ yaml: metadata
             | Options::ENABLE_DEFINITION_LIST
             | Options::ENABLE_YAML_STYLE_METADATA_BLOCKS
             | Options::ENABLE_PLUSES_DELIMITED_METADATA_BLOCKS
+            | Options::ENABLE_SUBSCRIPT
+            | Options::ENABLE_SUPERSCRIPT
     }
 
     fn noisy_parser(
